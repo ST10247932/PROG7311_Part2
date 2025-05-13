@@ -1,67 +1,66 @@
 ﻿@model IEnumerable<AgriEnergyConnects.Models.Farmer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Farmers";
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-success">Farmers</h2>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-person-plus-fill me-1"></i> Create New Farmer
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                User Email
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
-                    @if (item.User != null)
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning shadow-sm">
+            No farmers available. Click <strong>Create New Farmer</strong> to get started.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover shadow-sm align-middle">
+                <thead class="table-light text-center">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.First().FullName)</th>
+                        <th>@Html.DisplayNameFor(model => model.First().PhoneNumber)</th>
+                        <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.First().Location)</th>
+                        <th>User Email</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
                     {
-                        @item.User.Email
+                        <tr>
+                            <td>@item.FullName</td>
+                            <td>@(item.PhoneNumber ?? "Not provided")</td>
+                            <td>@(item.Email ?? "Not provided")</td>
+                            <td>@(item.Location ?? "Not provided")</td>
+                            <td>
+                                @if (item.User != null)
+                                {
+                                    <span class="text-primary">@item.User.Email</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">No User Assigned</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
                     }
-                    else
-                    {
-                        <span>No User Assigned</span>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
