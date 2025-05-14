@@ -95,10 +95,17 @@ Make sure the following packages are installed in your Visual Studio project:
 6. Press `F5` or click **Run** to launch the web application in your browser.
 
 ---
+## Dummy Logins
+**Employee**
+Username: pillay@gmail.com
+Password: Preshen@1234
+**Farmer**
+Username: naidoo@gmail.com or mike@gmail.com
+Password: Devesh@1234 or Mike@1234
 
 ## 🎥 Video Demonstration
 
-📺 YouTube Link (Unlisted): **[To Be Added]**
+📺 YouTube Link (Unlisted): **https://youtu.be/al7Wkjl-Kag**
 
 The video includes:
 - Project overview
