@@ -85,14 +85,64 @@ Make sure the following packages are installed in your Visual Studio project:
 
 ## ⚙️ Setup Instructions
 
-> These steps are only necessary if you are not watching the video demonstration.
+To run the application locally:
 
-1. **Clone the repository** into Visual Studio.
-2. **Install all NuGet packages** listed above.
-3. Create a database in **SQL Server Management Studio (SSMS)**.
-4. Configure your connection string in `appsettings.json`.
-5. Run the following command in the Package Manager Console to apply migrations:
-6. Press `F5` or click **Run** to launch the web application in your browser.
+1. **Clone the Repository**
+   - Open in Visual Studio
+
+2. **Install Required NuGet Packages**
+   - Use the NuGet Package Manager
+
+3. **Configure the Database**
+   - Open `appsettings.json`
+   - Add your local SQL Server connection string, e.g.:
+     ```json
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=localhost;Database=AgriEnergyConnectDB;Trusted_Connection=True;"
+     }
+     ```
+
+4. **Apply Migrations**
+   - Open the Package Manager Console:
+     ```bash
+     Add-Migration InitialCreate
+     Update-Database
+     ```
+
+5. **Run the Application**
+   - Press `F5` or click **Run**
+
+---
+
+## 🗄️ Manual Database Setup (If EF Fails)
+
+If you cannot run migrations, you can manually create the database with this SQL script:
+
+```sql
+CREATE DATABASE AgriEnergyConnectDB;
+GO
+
+USE AgriEnergyConnectDB;
+GO
+
+CREATE TABLE Farmers (
+    Id INT PRIMARY KEY IDENTITY,
+    FirstName NVARCHAR(100),
+    LastName NVARCHAR(100),
+    Email NVARCHAR(256),
+    PasswordHash NVARCHAR(MAX),
+    Role NVARCHAR(50)
+);
+GO
+
+CREATE TABLE Products (
+    Id INT PRIMARY KEY IDENTITY,
+    FarmerId INT FOREIGN KEY REFERENCES Farmers(Id),
+    ProductName NVARCHAR(100),
+    Category NVARCHAR(100),
+    ProductionDate DATE
+);
+GO
 
 ---
 ## Dummy Logins
